@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:swamp_fox/navBar.dart';
 import 'package:swamp_fox/pageChanger.dart';
 import 'package:swamp_fox/statusBar.dart';
+import 'package:swamp_fox/titleBar.dart';
 import 'package:swamp_fox/topicList.dart';
 
 void main() {
@@ -39,6 +40,7 @@ class App extends StatelessWidget {
         TopicList(),
         PageChanger(),
         NavBar(),
+        TitleBar(),
         StatusBar(),
       ],
     );
