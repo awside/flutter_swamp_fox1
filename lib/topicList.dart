@@ -4,11 +4,11 @@ import 'package:swamp_fox/emitter.dart' as Emitter;
 final List<Widget> widgetList = [
   Container(height: 44),
   TopicGroup(
-    'FID',
+    'Foriegn Internal Defense (FID)',
     [
       TopicData('Internal Defence', 'Defend the country itself!'),
       TopicData('MDMP', 'Defend the country itself!'),
-      TopicData('Axillery', 'Defend the country itself!'),
+      TopicData('Auxillery', 'Defend the country itself!'),
     ],
   ),
   TopicGroup(
@@ -37,9 +37,9 @@ class TopicList extends StatelessWidget {
             return Container();
           }
           return Container(
-            height: 1,
+            height: 0,
             margin: EdgeInsets.all(8),
-            // color: Color.fromRGBO(0, 0, 0, 0.2),
+            color: Colors.grey.shade300,
           );
         },
       ),
@@ -89,16 +89,16 @@ class TopicGroup extends StatelessWidget {
                 child: Container(
                   height: 2,
                   decoration: BoxDecoration(
-                    color: Colors.amber.shade800.withAlpha(150),
+                    color: Colors.amber.shade600.withAlpha(150),
                     borderRadius: BorderRadius.circular(2),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.amber.shade800.withAlpha(150),
-                        blurRadius: 5,
-                        spreadRadius: 0,
-                        offset: Offset(5, 2),
-                      ),
-                    ],
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     color: Colors.grey.shade600.withAlpha(150),
+                    //     blurRadius: 4,
+                    //     spreadRadius: 0,
+                    //     offset: Offset(5, 2),
+                    //   ),
+                    // ],
                   ),
                 ),
               ),
@@ -130,29 +130,29 @@ class Topic extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Emitter.emit('move page', null);
+        Emitter.emit('open modal', null);
       },
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
         ),
-        margin: EdgeInsets.only(top: 8, bottom: 8),
+        margin: EdgeInsets.only(left: 8, top: 8, bottom: 8),
         child: Row(
           children: <Widget>[
-            // Container(
-            //   height: 50,
-            //   width: 50,
-            //   child: Icon(
-            //     Icons.bookmark_border,
-            //     color: Color.fromRGBO(0, 0, 0, 0.5),
-            //   ),
-            // ),
-            // Container(
-            //   width: 1,
-            //   height: 50,
-            //   margin: EdgeInsets.only(right: 16),
-            //   color: Color.fromRGBO(0, 0, 0, 0.15),
-            // ),
+            Container(
+              height: 44,
+              width: 30,
+              child: Icon(
+                Icons.subject,
+                color: Color.fromRGBO(0, 0, 0, 0.5),
+              ),
+            ),
+            Container(
+              width: 1,
+              height: 44,
+              margin: EdgeInsets.only(left: 8, right: 16),
+              color: Color.fromRGBO(0, 0, 0, 0.15),
+            ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -175,12 +175,12 @@ class Topic extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              child: Icon(
-                Icons.keyboard_arrow_right,
-                color: Color.fromRGBO(0, 0, 0, 0.5),
-              ),
-            ),
+            // Container(
+            //   child: Icon(
+            //     Icons.subject,
+            //     color: Color.fromRGBO(0, 0, 0, 0.5),
+            //   ),
+            // ),
           ],
         ),
       ),

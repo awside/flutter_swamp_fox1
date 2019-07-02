@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:swamp_fox/modal.dart';
 import 'package:swamp_fox/navBar.dart';
 import 'package:swamp_fox/pageChanger.dart';
 import 'package:swamp_fox/statusBar.dart';
@@ -42,6 +43,7 @@ class App extends StatelessWidget {
         NavBar(),
         TitleBar(),
         StatusBar(),
+        Modal(),
       ],
     );
   }
