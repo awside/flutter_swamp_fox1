@@ -1,16 +1,25 @@
 import 'dart:async';
-import 'dart:convert';
-import 'package:flutter/services.dart';
+import 'package:swamp_fox/localStorage.dart' as MyLocalStorage;
 
-load() {
-  _loadAsset().then((value) {
-    print(value);
-  });
+List<TopicsData> topicsDataList = [];
+
+Future load() async {
+  // await _isFirstLoad();
 }
 
-Future<TopicsData> _loadAsset() async {
-  return TopicsData.fromJson(
-      json.decode(await rootBundle.loadString('assets/fid.json')));
+Future _loadDoctrineAttempt() async {
+
+}
+
+Future _isFirstLoad() async {
+  var value = await MyLocalStorage.getData('doctrine-date');
+  if (value == null)
+    await MyLocalStorage.saveData('doctrine-date', '2000-01-01');
+}
+
+Future _loadTopic(String fileName) async {
+  var jsonData = await MyLocalStorage.getJson(fileName);
+  topicsDataList.add(TopicsData.fromJson(jsonData));
 }
 
 class TopicsData {

@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:swamp_fox/emitter.dart' as Emitter;
 
@@ -192,29 +190,10 @@ class LoadableContent extends StatefulWidget {
 }
 
 class _LoadableContentState extends State<LoadableContent> {
-  Container container = Container();
-
-  @override
-  void initState() {
-    super.initState();
-
-    loadAsset().then((jsonData) {
-      var parsedJson = json.decode(jsonData);
-      setState(() {
-        container = Container(
-          child: Text(parsedJson['title']),
-        );
-      });
-    });
-  }
-
-  Future<String> loadAsset() async {
-    return await rootBundle.loadString('assets/fid.json');
-  }
 
   @override
   Widget build(BuildContext context) {
-    return container;
+    return Container();
   }
 }
 

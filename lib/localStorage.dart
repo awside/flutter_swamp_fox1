@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<String> _localPath() async {
   final directory = await getApplicationDocumentsDirectory();
@@ -8,7 +10,7 @@ Future<String> _localPath() async {
 
 Future<File> _localFile(String fileName) async {
   final path = await _localPath();
-  return File('$path/$fileName.txt');
+  return File('$path/$fileName');
 }
 
 Future<File> writeFile(String text, String fileName) async {
@@ -20,10 +22,10 @@ Future<String> readFile(String fileName) async {
   try {
     final file = await _localFile(fileName);
     final exists = await file.exists();
-    if (!exists) return '';
+    if (!exists) return null;
     return await file.readAsString();
   } catch (e) {
-    return '';
+    return null;
   }
 }
 
@@ -33,4 +35,39 @@ Future<bool> deleteFile(String fileName) async {
   if (!exists) return false;
   file.deleteSync(recursive: true);
   return true;
+}
+
+Future<SharedPreferences> _getPrefs() async {
+  SharedPreferences prefs;
+  try {
+    prefs = await SharedPreferences.getInstance();
+  } catch (e) {
+    print(e);
+  }
+  return prefs;
+}
+
+Future saveData(String key, String data) async {
+  var prefs = await _getPrefs();
+  await prefs?.setString(key, data);
+}
+
+Future<String> getData(String key) async {
+  var prefs = await _getPrefs();
+  return prefs?.getString(key);
+}
+
+Future removeData(String key) async {
+  var prefs = await _getPrefs();
+  await prefs?.remove(key);
+}
+
+Future clearAllData() async {
+  var prefs = await _getPrefs();
+  prefs.clear();
+}
+
+Future getJson(String fileName) async {
+  var stringData = await readFile(fileName);
+  return json.decode(stringData);
 }
