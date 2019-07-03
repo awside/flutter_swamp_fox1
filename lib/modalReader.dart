@@ -1,9 +1,10 @@
 import 'dart:async';
-
+import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:swamp_fox/emitter.dart' as Emitter;
 
-class Modal extends StatelessWidget {
+class ModalReader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -139,18 +140,81 @@ class _ModalContentState extends State<ModalContent> {
         margin: EdgeInsets.only(
             top: MediaQuery.of(context).padding.top,
             bottom: MediaQuery.of(context).padding.bottom,
-            left: 16,
-            right: 16),
+            left: 8,
+            right: 8),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
           // mainAxisSize: MainAxisSize.max,
-          children: <Widget>[PullBar(this)],
+          children: <Widget>[
+            PullBar(this),
+            Expanded(
+              flex: 1,
+              child: LoadableContent(),
+            ),
+            Container(
+              height: 35,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      child: Icon(Icons.format_list_bulleted),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      child: Icon(Icons.arrow_upward),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      child: Icon(Icons.arrow_downward),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
+  }
+}
+
+class LoadableContent extends StatefulWidget {
+  @override
+  _LoadableContentState createState() => _LoadableContentState();
+}
+
+class _LoadableContentState extends State<LoadableContent> {
+  Container container = Container();
+
+  @override
+  void initState() {
+    super.initState();
+
+    loadAsset().then((jsonData) {
+      var parsedJson = json.decode(jsonData);
+      setState(() {
+        container = Container(
+          child: Text(parsedJson['title']),
+        );
+      });
+    });
+  }
+
+  Future<String> loadAsset() async {
+    return await rootBundle.loadString('assets/fid.json');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return container;
   }
 }
 
@@ -172,9 +236,7 @@ class PullBar extends StatelessWidget {
         parent.moveY(value.delta.dy);
       },
       child: Container(
-        height: 30,
-        // margin: EdgeInsets.only(top: 12, bottom: 12),
-        padding: EdgeInsets.only(top: 12, bottom: 12),
+        height: 35,
         decoration: BoxDecoration(
           border: Border.all(color: Colors.transparent),
         ),
@@ -185,6 +247,7 @@ class PullBar extends StatelessWidget {
               child: Container(),
             ),
             Container(
+              height: 4,
               width: 100,
               decoration: BoxDecoration(
                 color: Colors.grey.shade800,

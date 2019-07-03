@@ -1,0 +1,9 @@
+{
+  "header": "Header",
+  "articles": [
+    {
+      "title": "Article 1",
+      "paragraphs": ["Paragraph 1", "Paragraph 2", "Paragraph 3"]
+    }
+  ]
+}
