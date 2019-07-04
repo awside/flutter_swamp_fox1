@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:swamp_fox/firebaseStorage.dart' as MyFirebaseStorage;
 import 'package:swamp_fox/localStorage.dart' as MyLocalStorage;
 
@@ -48,6 +49,52 @@ Future _loadTopics() async {
     var topicJson = await MyLocalStorage.getJsonFromData(fileName);
     topicsDataList.add(TopicsData.fromJson(topicJson));
   });
+}
+
+renderTopic(TopicsData topicsData) {
+  return Container(
+    child: Column(
+      children: <Widget>[
+        Container(
+          child: Text(topicsData.header),
+        ),
+        Container(
+          child: renderArticles(topicsData.articles),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget renderArticles(List<Articles> articles) {
+  List<Widget> articleWidgets = articles
+      .map((article) => renderArticle(article.title, article.paragraphs))
+      .toList();
+
+  return Container(
+    child: Column(
+      children: articleWidgets,
+    ),
+  );
+}
+
+Widget renderArticle(String title, List<String> paragraphs) {
+  var paragraphWidgets = paragraphs
+      .map((paragraph) => Container(
+            child: Text(paragraph),
+          ))
+      .toList();
+
+  return Container(
+    child: Column(
+      children: <Widget>[
+        Container(
+          child: Text(title),
+        ),
+        ...paragraphWidgets
+      ],
+    ),
+  );
 }
 
 class TopicsData {

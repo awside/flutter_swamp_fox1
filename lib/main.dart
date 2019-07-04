@@ -10,16 +10,14 @@ import 'package:swamp_fox/statusBar.dart';
 import 'package:swamp_fox/titleBar.dart';
 import 'package:swamp_fox/topicList.dart';
 
-void main() {
+void main() async {
   MyFirebaseStorage.setup();
 
-  MyDoctrine.load();
+  await MyDoctrine.load();
 
   MyHelper.statusBarDark();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) {
-    runApp(new Start());
-  });
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  runApp(new Start());
 }
 
 class Start extends StatelessWidget {
