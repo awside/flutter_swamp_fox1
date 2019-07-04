@@ -1,25 +1,53 @@
 import 'dart:async';
+import 'package:swamp_fox/firebaseStorage.dart' as MyFirebaseStorage;
 import 'package:swamp_fox/localStorage.dart' as MyLocalStorage;
 
 List<TopicsData> topicsDataList = [];
+List<String> fileList = [];
 
 Future load() async {
-  // await _isFirstLoad();
+  // await MyLocalStorage.clearAllData();
+  if (await _shouldUpdateDoctrine()) {
+    await _updateDoctrine();
+    await _loadTopics();
+  } else {
+    await _loadTopics();
+  }
+  topicsDataList.forEach(print);
+  fileList.forEach(print);
 }
 
-Future _loadDoctrineAttempt() async {
-
+Future<bool> _shouldUpdateDoctrine() async {
+  if (await MyLocalStorage.getData('doctrine-date') == null) return true;
+  var doctrineJson =
+      await MyFirebaseStorage.getJsonFromFile('doctrineInfo.json');
+  var doctrineAppDate =
+      DateTime.parse(await MyLocalStorage.getData('doctrine-date'));
+  var doctrineFirebaseDate = DateTime.parse(doctrineJson['doctrine-date']);
+  return doctrineAppDate.compareTo(doctrineFirebaseDate) != 0;
 }
 
-Future _isFirstLoad() async {
-  var value = await MyLocalStorage.getData('doctrine-date');
-  if (value == null)
-    await MyLocalStorage.saveData('doctrine-date', '2000-01-01');
+Future _updateDoctrine() async {
+  print('updating doctrine');
+  var doctrineJson =
+      await MyFirebaseStorage.getJsonFromFile('doctrineInfo.json');
+  await MyLocalStorage.saveData('doctrine-date', doctrineJson['doctrine-date']);
+  List<String> _fileList = [];
+  await Future.forEach(doctrineJson['file-list'], (fileName) async {
+    _fileList.add(fileName);
+    var topicStringFile = await MyFirebaseStorage.getStringFromFile(fileName);
+    await MyLocalStorage.saveData(fileName, topicStringFile);
+  });
+  await MyLocalStorage.saveStringListData('file-list', _fileList);
 }
 
-Future _loadTopic(String fileName) async {
-  var jsonData = await MyLocalStorage.getJson(fileName);
-  topicsDataList.add(TopicsData.fromJson(jsonData));
+Future _loadTopics() async {
+  var _fileList = await MyLocalStorage.getStringListData('file-list');
+  await Future.forEach(_fileList, (fileName) async {
+    fileList.add(fileName);
+    var topicJson = await MyLocalStorage.getJsonFromData(fileName);
+    topicsDataList.add(TopicsData.fromJson(topicJson));
+  });
 }
 
 class TopicsData {

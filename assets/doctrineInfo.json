@@ -1,3 +1,6 @@
 {
-    "doctrine-date": "2019-07-03"
+    "doctrine-date": "2019-07-03",
+    "file-list": [
+        "fid.json"
+    ]
 }

@@ -37,6 +37,11 @@ Future<bool> deleteFile(String fileName) async {
   return true;
 }
 
+Future getJsonFromFile(String fileName) async {
+  var stringData = await readFile(fileName);
+  return json.decode(stringData);
+}
+
 Future<SharedPreferences> _getPrefs() async {
   SharedPreferences prefs;
   try {
@@ -57,6 +62,21 @@ Future<String> getData(String key) async {
   return prefs?.getString(key);
 }
 
+Future getJsonFromData(String key) async {
+  var prefs = await _getPrefs();
+  return json.decode(prefs?.getString(key));
+}
+
+Future saveStringListData(String key, List<String> data) async {
+  var prefs = await _getPrefs();
+  await prefs?.setStringList(key, data);
+}
+
+Future<List<String>> getStringListData(String key) async {
+  var prefs = await _getPrefs();
+  return prefs?.getStringList(key);
+}
+
 Future removeData(String key) async {
   var prefs = await _getPrefs();
   await prefs?.remove(key);
@@ -65,9 +85,4 @@ Future removeData(String key) async {
 Future clearAllData() async {
   var prefs = await _getPrefs();
   prefs.clear();
-}
-
-Future getJson(String fileName) async {
-  var stringData = await readFile(fileName);
-  return json.decode(stringData);
 }
