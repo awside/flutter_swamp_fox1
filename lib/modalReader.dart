@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:swamp_fox/emitter.dart' as Emitter;
+import 'package:swamp_fox/doctrine.dart' as MyDoctrine;
 
 class ModalReader extends StatelessWidget {
   @override
@@ -193,7 +194,7 @@ class _LoadableContentState extends State<LoadableContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return MyDoctrine.renderTopic(MyDoctrine.topicsDataList[0]);
   }
 }
 

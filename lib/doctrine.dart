@@ -14,8 +14,6 @@ Future load() async {
   } else {
     await _loadTopics();
   }
-  topicsDataList.forEach(print);
-  fileList.forEach(print);
 }
 
 Future<bool> _shouldUpdateDoctrine() async {
@@ -29,7 +27,6 @@ Future<bool> _shouldUpdateDoctrine() async {
 }
 
 Future _updateDoctrine() async {
-  print('updating doctrine');
   var doctrineJson =
       await MyFirebaseStorage.getJsonFromFile('doctrineInfo.json');
   await MyLocalStorage.saveData('doctrine-date', doctrineJson['doctrine-date']);
@@ -59,16 +56,16 @@ renderTopic(TopicsData topicsData) {
           child: Text(topicsData.header),
         ),
         Container(
-          child: renderArticles(topicsData.articles),
+          child: _renderArticles(topicsData.articles),
         ),
       ],
     ),
   );
 }
 
-Widget renderArticles(List<Articles> articles) {
+Widget _renderArticles(List<Articles> articles) {
   List<Widget> articleWidgets = articles
-      .map((article) => renderArticle(article.title, article.paragraphs))
+      .map((article) => _renderArticle(article.title, article.paragraphs))
       .toList();
 
   return Container(
@@ -78,7 +75,7 @@ Widget renderArticles(List<Articles> articles) {
   );
 }
 
-Widget renderArticle(String title, List<String> paragraphs) {
+Widget _renderArticle(String title, List<String> paragraphs) {
   var paragraphWidgets = paragraphs
       .map((paragraph) => Container(
             child: Text(paragraph),
