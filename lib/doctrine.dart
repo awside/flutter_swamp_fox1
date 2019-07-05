@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:swamp_fox/firebaseStorage.dart' as MyFirebaseStorage;
-import 'package:swamp_fox/localStorage.dart' as MyLocalStorage;
+import 'package:swamp_fox/io/firebase/firebaseStorage.dart' as MyFirebaseStorage;
+import 'package:swamp_fox/io/localStorage.dart' as MyLocalStorage;
+import 'package:swamp_fox/io/firebase/firebaseFirestore.dart' as MyFirestore;
 
 List<TopicsData> topicsDataList = [];
 List<String> fileList = [];
@@ -17,13 +19,13 @@ Future load() async {
 }
 
 Future<bool> _shouldUpdateDoctrine() async {
-  if (await MyLocalStorage.getData('doctrine-date') == null) return true;
-  var doctrineJson =
-      await MyFirebaseStorage.getJsonFromFile('doctrineInfo.json');
-  var doctrineAppDate =
-      DateTime.parse(await MyLocalStorage.getData('doctrine-date'));
-  var doctrineFirebaseDate = DateTime.parse(doctrineJson['doctrine-date']);
-  return doctrineAppDate.compareTo(doctrineFirebaseDate) != 0;
+  String localStringVersionDateNum = await MyLocalStorage.getData('version-date');
+  if (localStringVersionDateNum == null) return true;
+  
+  Timestamp localVersionTimestamp = Timestamp.fromMillisecondsSinceEpoch(int.parse(localStringVersionDateNum));
+  Timestamp firestoreVersionTimestamp = await MyFirestore.getField('info', 'info', 'version-date');
+  
+  return localVersionTimestamp.compareTo(firestoreVersionTimestamp) != 0;
 }
 
 Future _updateDoctrine() async {

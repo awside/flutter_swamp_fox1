@@ -1,20 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:swamp_fox/firebaseStorage.dart' as MyFirebaseStorage;
 import 'package:swamp_fox/doctrine.dart' as MyDoctrine;
-import 'package:swamp_fox/helper.dart' as MyHelper;
-import 'package:swamp_fox/modalReader.dart';
-import 'package:swamp_fox/navBar.dart';
-import 'package:swamp_fox/pageChanger.dart';
-import 'package:swamp_fox/statusBar.dart';
-import 'package:swamp_fox/titleBar.dart';
-import 'package:swamp_fox/topicList.dart';
+import 'package:swamp_fox/helper/helper.dart' as MyHelper;
 
 void main() async {
-  MyFirebaseStorage.setup();
-
-  await MyDoctrine.load();
-
   MyHelper.statusBarDark();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(new Start());
@@ -42,13 +31,12 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        Container(color: Colors.white),
-        TopicList(),
-        PageChanger(),
-        NavBar(),
-        TitleBar(),
-        StatusBar(),
-        ModalReader(),
+        Container(
+          color: Colors.white,
+          child: Center(
+            child: Text('hello world'),
+          ),
+        ),
       ],
     );
   }

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'emitter.dart' as Emitter;
+import 'package:swamp_fox/helper/emitter.dart' as Emitter;
 
 FirebaseAuth _auth;
 

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:swamp_fox/emitter.dart' as Emitter;
+import 'package:swamp_fox/helper/emitter.dart' as Emitter;
 import 'package:swamp_fox/doctrine.dart' as MyDoctrine;
 
 class ModalReader extends StatelessWidget {
