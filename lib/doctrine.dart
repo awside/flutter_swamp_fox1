@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:swamp_fox/io/firebase/firebaseStorage.dart' as MyFirebaseStorage;
-import 'package:swamp_fox/io/localStorage.dart' as MyLocalStorage;
-import 'package:swamp_fox/io/firebase/firebaseFirestore.dart' as MyFirestore;
+import 'package:swamp_fox/io/firebase/storage.dart' as MyFirebaseStorage;
+import 'package:swamp_fox/io/localStorage/localStorage.dart' as MyLocalStorage;
+import 'package:swamp_fox/io/firebase/firestore.dart' as MyFirestore;
 
 List<TopicsData> topicsDataList = [];
 List<String> fileList = [];
