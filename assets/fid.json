@@ -3,7 +3,14 @@
   "articles": [
     {
       "title": "Article 1",
-      "paragraphs": ["Paragraph 1", "Paragraph 2", "Paragraph 3"]
+      "paragraphs": [
+        "Paragraph 1",
+        "Paragraph 2",
+        "Paragraph 3",
+        "Paragraph 1",
+        "Paragraph 2",
+        "Paragraph 3"
+      ]
     }
   ]
 }

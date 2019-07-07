@@ -1,14 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:swamp_fox/doctrine.dart' as MyDoctrine;
 import 'package:swamp_fox/helper/helper.dart' as MyHelper;
-import 'package:swamp_fox/io/localStorage/localStorageHelper.dart'
-    as MyLocalStorageHelper;
-import 'package:swamp_fox/io/firebase/firebaseHelper.dart' as MyFirebaseHelper;
+import 'package:swamp_fox/topics/topicsLoader.dart' show TopicsLoader;
+import 'package:swamp_fox/topics/topicBuilder.dart' show TopicsBuilder;
 
 void main() async {
-  MyFirebaseHelper.getVersionDate().then(print);
-  MyFirebaseHelper.getFileList().then(print);
+  await TopicsLoader.instance.load();
+
+  Timer(Duration(seconds: 2), () {
+    print(TopicsBuilder.instance.topicDataList);
+  });
 
   MyHelper.statusBarDark();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

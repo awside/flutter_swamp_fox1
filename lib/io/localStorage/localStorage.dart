@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,11 +36,6 @@ Future<bool> deleteFile(String fileName) async {
   return true;
 }
 
-Future getJsonFromFile(String fileName) async {
-  var stringData = await readFile(fileName);
-  return json.decode(stringData);
-}
-
 Future<SharedPreferences> _getPrefs() async {
   SharedPreferences prefs;
   try {
@@ -60,11 +54,6 @@ Future saveData(String key, String data) async {
 Future<String> getData(String key) async {
   var prefs = await _getPrefs();
   return prefs?.getString(key);
-}
-
-Future getJsonFromData(String key) async {
-  var prefs = await _getPrefs();
-  return json.decode(prefs?.getString(key));
 }
 
 Future saveStringListData(String key, List<String> data) async {
