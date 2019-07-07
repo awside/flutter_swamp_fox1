@@ -14,20 +14,15 @@ class TopicsLoader {
   List<String> topicFileNameList = [];
 
   Future load() async {
-    await LocalStorage.instance.clearAll();
     await loadFromLocal();
-    // if ((await LocalStorage.instance.getFileNameList()) == null ||
-    //     (await doesLocalVersionDateNeedUpdate())) {
-    //   loadFromFirebase();
-    // } else {
-    //   await loadFromLocal();
-    // }
+    shouldLoadFromFirebase();
   }
 
   Future loadFromLocal() async {
     topicFileNameList = await LocalStorage.instance.getFileNameList() ?? [];
     topicDataStringList =
-        await LocalStorage.instance.getTopicDataStringList(topicFileNameList) ?? [];
+        await LocalStorage.instance.getTopicDataStringList(topicFileNameList) ??
+            [];
     TopicsBuilder.instance.build(topicDataStringList);
   }
 
@@ -35,6 +30,13 @@ class TopicsLoader {
     await LocalStorage.instance.saveFileNameList(topicFileNameList);
     await LocalStorage.instance
         .saveTopicDataStringList(topicFileNameList, topicDataStringList);
+  }
+
+  Future shouldLoadFromFirebase() async {
+    if ((await LocalStorage.instance.getFileNameList()) == null ||
+        (await doesLocalVersionDateNeedUpdate())) {
+      await loadFromFirebase();
+    }
   }
 
   Future loadFromFirebase() async {

@@ -8,10 +8,7 @@ import 'package:swamp_fox/topics/topicBuilder.dart' show TopicsBuilder;
 
 void main() async {
   await TopicsLoader.instance.load();
-
-  Timer(Duration(seconds: 2), () {
-    print(TopicsBuilder.instance.topicDataList);
-  });
+  print(TopicsBuilder.instance.topicDataList);
 
   MyHelper.statusBarDark();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
