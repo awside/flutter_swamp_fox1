@@ -1,15 +1,16 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/rendering.dart';
 import 'package:swamp_fox/helper/helper.dart' as MyHelper;
 import 'package:swamp_fox/topics/topicsLoader.dart' show TopicsLoader;
-import 'package:swamp_fox/topics/topicBuilder.dart' show TopicsBuilder;
+import 'package:swamp_fox/widgets/bottomBar.dart' as MyBottomBar;
+import 'package:swamp_fox/widgets/statusBar.dart';
+import 'package:swamp_fox/widgets/topBar.dart';
 
 void main() async {
   await TopicsLoader.instance.load();
-  print(TopicsBuilder.instance.topicDataList);
 
+  // debugPaintPointersEnabled = true;
   MyHelper.statusBarDark();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(new Start());
@@ -39,10 +40,10 @@ class App extends StatelessWidget {
       children: <Widget>[
         Container(
           color: Colors.white,
-          child: Center(
-            child: Text('hello world'),
-          ),
         ),
+        MyBottomBar.BottomBar(),
+        TopBar(),
+        StatusBar(),
       ],
     );
   }
