@@ -13,9 +13,16 @@ class TopicsLoader {
   List<String> topicDataStringList = [];
   List<String> topicFileNameList = [];
 
+  String findTopicDataStringWithFileName(String fileName) {
+    for (int i = 0; i < topicFileNameList.length; i++) {
+      if (topicFileNameList[i] == fileName) return topicDataStringList[i];
+    }
+    return null;
+  }
+
   Future load() async {
     await loadFromLocal();
-    shouldLoadFromFirebase();
+    await shouldLoadFromFirebase();
   }
 
   Future loadFromLocal() async {

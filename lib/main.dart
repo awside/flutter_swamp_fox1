@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/rendering.dart';
 import 'package:swamp_fox/helper/helper.dart' as MyHelper;
+import 'package:swamp_fox/pages/listPage.dart';
+import 'package:swamp_fox/renderers/listRenderer.dart';
 import 'package:swamp_fox/topics/topicsLoader.dart' show TopicsLoader;
 import 'package:swamp_fox/widgets/bottomBar.dart' as MyBottomBar;
 import 'package:swamp_fox/widgets/statusBar.dart';
@@ -41,8 +43,9 @@ class App extends StatelessWidget {
         Container(
           color: Colors.white,
         ),
+        ListPage(widgetList: ListRenderer.getRenderedWidgetList('list')),
         MyBottomBar.BottomBar(),
-        TopBar(),
+        // TopBar(),
         StatusBar(),
       ],
     );

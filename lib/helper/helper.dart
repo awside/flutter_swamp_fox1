@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
@@ -17,4 +19,8 @@ Rect dimensionsOf(BuildContext context) {
 
 double getScrollPosition(ScrollController controller) {
   return controller.position.pixels;
+}
+
+Map<String, dynamic> getJsonFromString(String data) {
+  return json.decode(data);
 }

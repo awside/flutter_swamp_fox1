@@ -1,0 +1,18 @@
+{
+  "sections": [
+    {
+      "header": "FID",
+      "items": [
+        { "title": "FID topic 1", "fileName": "fid" },
+        { "title": "FID topic 2", "fileName": "fid" }
+      ]
+    },
+    {
+      "header": "MDMP",
+      "items": [
+        { "title": "MDMP topic 1", "fileName": "fid" },
+        { "title": "MDMP topic 2", "fileName": "fid" }
+      ]
+    }
+  ]
+}
