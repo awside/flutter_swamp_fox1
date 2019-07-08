@@ -13,14 +13,7 @@ class ListPage extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         if (index == 0)
           return Container(
-            padding: EdgeInsets.only(left: 16, right: 16),
-            child: Text(
-              'Doctrine',
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+            height: TopBar.height,
           );
         return widgetList[index - 1];
       },

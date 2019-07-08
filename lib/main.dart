@@ -6,6 +6,8 @@ import 'package:swamp_fox/pages/listPage.dart';
 import 'package:swamp_fox/renderers/listRenderer.dart';
 import 'package:swamp_fox/topics/topicsLoader.dart' show TopicsLoader;
 import 'package:swamp_fox/widgets/bottomBar.dart' as MyBottomBar;
+import 'package:swamp_fox/widgets/modal.dart';
+import 'package:swamp_fox/widgets/modalReader.dart';
 import 'package:swamp_fox/widgets/statusBar.dart';
 import 'package:swamp_fox/widgets/topBar.dart';
 
@@ -45,8 +47,9 @@ class App extends StatelessWidget {
         ),
         ListPage(widgetList: ListRenderer.getRenderedWidgetList('list')),
         MyBottomBar.BottomBar(),
-        // TopBar(),
+        TopBar(),
         StatusBar(),
+        Modal.instance,
       ],
     );
   }

@@ -148,52 +148,13 @@ class _ModalContentState extends State<ModalContent> {
           // mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             PullBar(this),
-            Expanded(
-              flex: 1,
-              child: LoadableContent(),
-            ),
             Container(
-              height: 35,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      child: Icon(Icons.format_list_bulleted),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      child: Icon(Icons.arrow_upward),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      child: Icon(Icons.arrow_downward),
-                    ),
-                  ),
-                ],
-              ),
+              child: Text('hello world'),
             ),
           ],
         ),
       ),
     );
-  }
-}
-
-class LoadableContent extends StatefulWidget {
-  @override
-  _LoadableContentState createState() => _LoadableContentState();
-}
-
-class _LoadableContentState extends State<LoadableContent> {
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
 

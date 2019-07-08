@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:swamp_fox/helper/helper.dart';
 import 'package:swamp_fox/topics/topicsLoader.dart' show TopicsLoader;
+import 'package:swamp_fox/widgets/modal.dart';
+import 'package:typicons_flutter/typicons_flutter.dart';
+import 'package:swamp_fox/helper/emitter.dart' as Emitter;
 
 class Section {
   String header;
@@ -26,7 +31,7 @@ class ListRenderer {
   }
 
   static Widget createWidget(Section section) {
-    List<Container> listItems = [];
+    List<Widget> listItems = [];
     for (int i = 0; i < section.titleList.length; i++) {
       listItems.add(createListItem(section.titleList[i], section.fileName[i]));
     }
@@ -40,8 +45,8 @@ class ListRenderer {
               boxShadow: [
                 BoxShadow(
                   blurRadius: 10,
-                  spreadRadius: -5,
-                  color: Colors.grey.shade100,
+                  spreadRadius: -8,
+                  color: Colors.black.withAlpha(20),
                 )
               ],
             ),
@@ -52,16 +57,16 @@ class ListRenderer {
 
   static Widget createHeader(String header) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.fromLTRB(32, 16, 16, 0),
       child: Align(
         alignment: Alignment(-1, 0),
         child: Text(
           header,
           style: TextStyle(
-            fontSize: 15,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             letterSpacing: 1.5,
-            color: Colors.grey.shade400,
+            color: Colors.grey.shade800,
           ),
         ),
       ),
@@ -69,25 +74,37 @@ class ListRenderer {
   }
 
   static Widget createListItem(String data, String fileName) {
-    return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(
-          color: Colors.blueGrey.shade100,
-          width: 0.5,
-        ),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Align(
-        alignment: Alignment(-1, 0),
-        child: Text(
-          data,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.blueGrey,
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.lightImpact();
+        Modal.instance.turnOn();
+      },
+      child: Container(
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(
+            color: Colors.grey.shade300,
+            width: 0.5,
           ),
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              data,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey.shade600,
+              ),
+            ),
+            Icon(
+              Typicons.document_text,
+              color: Colors.blueGrey.shade400,
+            ),
+          ],
         ),
       ),
     );
