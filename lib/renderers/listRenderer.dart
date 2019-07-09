@@ -5,7 +5,6 @@ import 'package:swamp_fox/helper/helper.dart';
 import 'package:swamp_fox/topics/topicsLoader.dart' show TopicsLoader;
 import 'package:swamp_fox/widgets/modal.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
-import 'package:swamp_fox/helper/emitter.dart' as Emitter;
 
 class Section {
   String header;

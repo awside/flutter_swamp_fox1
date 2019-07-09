@@ -16,6 +16,11 @@ class Modal extends StatelessWidget {
     ModalWindow.instance.turnOff();
   }
 
+  turnOffQuickly() {
+    Tint.instance.turnOff();
+    ModalWindow.instance.turnOffQuickly();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(children: <Widget>[
@@ -87,6 +92,7 @@ class _ModalWindowState extends State<ModalWindow> {
   turnOn() {
     setState(() {
       isActive = true;
+      duration = Duration(milliseconds: 300);
     });
   }
 
@@ -95,6 +101,14 @@ class _ModalWindowState extends State<ModalWindow> {
       isActive = false;
       yOffset = 0;
       duration = Duration(milliseconds: 300);
+    });
+  }
+
+  turnOffQuickly() {
+    setState(() {
+      isActive = false;
+      yOffset = 0;
+      duration = Duration(milliseconds: 200);
     });
   }
 
@@ -121,7 +135,7 @@ class _ModalWindowState extends State<ModalWindow> {
 
   move(double dy) {
     if (dy > 10) {
-      Modal.instance.turnOff();
+      Modal.instance.turnOffQuickly();
       return;
     }
     setState(() {
@@ -145,6 +159,7 @@ class _ModalWindowState extends State<ModalWindow> {
       height: MediaQuery.of(context).size.height -
           MediaQuery.of(context).padding.top,
       duration: duration,
+      curve: Curves.easeInOut,
       child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
