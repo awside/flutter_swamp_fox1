@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:swamp_fox/helper/helper.dart';
+import 'package:swamp_fox/renderers/documentRenderer.dart';
 import 'package:swamp_fox/topics/topicsLoader.dart' show TopicsLoader;
-import 'package:swamp_fox/widgets/modal.dart';
+import 'package:swamp_fox/widgets/documentModal.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 
 class Section {
@@ -76,7 +77,8 @@ class ListRenderer {
     return GestureDetector(
       onTap: () {
         HapticFeedback.lightImpact();
-        Modal.instance.turnOn();
+        DocumentRenderer.instance.render(fileName);
+        DocumentModal.instance.turnOn();
       },
       child: Container(
         padding: EdgeInsets.all(16),

@@ -7,15 +7,23 @@ class DocumentRenderer {
       DocumentRenderer._privateConstructor();
   DocumentRenderer._privateConstructor();
 
-  Container container;
+  Widget document;
   Document _document;
 
   render(String fileName) {
     _document = Document.fromString(
         TopicsLoader.instance.findTopicDataStringWithFileName(fileName));
+    _renderDocument();
   }
 
-  _createContainer() {}
+  _renderDocument() {
+    return Column(
+      children: <Widget>[
+        HeaderItem(_document.header),
+        ..._document.articleList.map((article) => ArticleItem(article)).toList()
+      ],
+    );
+  }
 
   // TODO create widgets in one file?
 }
@@ -51,7 +59,7 @@ class HeaderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 44,
+      padding: EdgeInsets.all(8),
       child: Align(
         alignment: Alignment(-1, 0),
         child: Text(
@@ -65,13 +73,47 @@ class HeaderItem extends StatelessWidget {
 
 class ArticleItem extends StatelessWidget {
   final Article article;
+  List<Widget> widgetList = [];
 
-  const ArticleItem(this.article);
+  ArticleItem(this.article) {
+    widgetList.add(buildTitle(article.title));
+    article.paragraphList.forEach((paragraph) {
+      widgetList.add(buildParagraph(paragraph));
+    });
+  }
 
-  buildParagraph(String paragraph) {}
+  Widget buildTitle(String title) {
+    return Container(
+      padding: EdgeInsets.all(8),
+      child: Align(
+        alignment: Alignment(-1, 0),
+        child: Text(
+          title,
+          style: TextStyle(fontSize: 18),
+        ),
+      ),
+    );
+  }
+
+  Widget buildParagraph(String paragraph) {
+    return Container(
+      padding: EdgeInsets.all(8),
+      child: Align(
+        alignment: Alignment(-1, 0),
+        child: Text(
+          paragraph,
+          style: TextStyle(fontSize: 14),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Column(
+        children: widgetList,
+      ),
+    );
   }
 }

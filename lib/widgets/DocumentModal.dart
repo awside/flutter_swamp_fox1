@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:swamp_fox/renderers/documentRenderer.dart';
 
-class Modal extends StatelessWidget {
-  static final Modal instance = Modal._privateConstructor();
-  Modal._privateConstructor();
+class DocumentModal extends StatelessWidget {
+  static final DocumentModal instance = DocumentModal._privateConstructor();
+  DocumentModal._privateConstructor();
 
   turnOn() {
     Tint.instance.turnOn();
@@ -46,7 +47,7 @@ class _TintState extends State<Tint> {
   turnOn() {
     setState(() {
       offStage = false;
-      opacity = 0.7;
+      opacity = 0.5;
     });
   }
 
@@ -127,7 +128,7 @@ class _ModalWindowState extends State<ModalWindow> {
 
   shouldTurnOff() {
     if (yOffset > 50) {
-      Modal.instance.turnOff();
+      DocumentModal.instance.turnOff();
     } else {
       resetQuicklyToTop();
     }
@@ -135,7 +136,7 @@ class _ModalWindowState extends State<ModalWindow> {
 
   move(double dy) {
     if (dy > 10) {
-      Modal.instance.turnOffQuickly();
+      DocumentModal.instance.turnOffQuickly();
       return;
     }
     setState(() {
@@ -169,7 +170,10 @@ class _ModalWindowState extends State<ModalWindow> {
             ),
           ),
           child: Column(
-            children: <Widget>[PullBar()],
+            children: <Widget>[
+              PullBar(),
+              DocumentRenderer.instance.document
+            ],
           )),
     );
   }
