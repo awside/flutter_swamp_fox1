@@ -161,20 +161,18 @@ class _ModalWindowState extends State<ModalWindow> {
           MediaQuery.of(context).padding.top,
       duration: duration,
       curve: Curves.easeInOut,
-      child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            ),
-          ),
-          child: Column(
-            children: <Widget>[
-              PullBar(),
-              DocumentRenderer.instance.document
-            ],
-          )),
+      child: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+        child: Stack(
+          children: <Widget>[
+            DocumentRenderer.instance.document,
+            PullBar(),
+          ],
+        ),
+      ),
     );
   }
 }
