@@ -1,226 +1,237 @@
-// import 'dart:async';
+import 'dart:async';
 
-// import 'package:flutter/material.dart';
-// import 'package:swamp_fox/renderers/documentRenderer.dart';
+import 'package:flutter/material.dart';
 
-// class DocumentModal extends StatelessWidget {
-//   static final DocumentModal instance = DocumentModal._privateConstructor();
-//   DocumentModal._privateConstructor();
+class DocumentModal extends StatelessWidget {
+  static final DocumentModal instance = DocumentModal._privateConstructor();
+  DocumentModal._privateConstructor();
 
-//   turnOn() {
-//     Tint.instance.turnOn();
-//     ModalWindow.instance.turnOn();
-//   }
+  updateContent(Widget content) {
+    ModalWindow.instance.updateContent(content);
+  }
 
-//   turnOff() {
-//     Tint.instance.turnOff();
-//     ModalWindow.instance.turnOff();
-//   }
+  turnOn() {
+    Tint.instance.turnOn();
+    ModalWindow.instance.turnOn();
+  }
 
-//   turnOffQuickly() {
-//     Tint.instance.turnOff();
-//     ModalWindow.instance.turnOffQuickly();
-//   }
+  turnOff() {
+    Tint.instance.turnOff();
+    ModalWindow.instance.turnOff();
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Stack(children: <Widget>[
-//       Tint(),
-//       ModalWindow(),
-//     ]);
-//   }
-// }
+  turnOffQuickly() {
+    Tint.instance.turnOff();
+    ModalWindow.instance.turnOffQuickly();
+  }
 
-// class Tint extends StatefulWidget {
-//   static final _TintState instance = _TintState.instance;
-//   @override
-//   _TintState createState() => _TintState.instance;
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Stack(children: <Widget>[
+      Tint(),
+      ModalWindow(),
+    ]);
+  }
+}
 
-// class _TintState extends State<Tint> {
-//   static final _TintState instance = _TintState._privateConstructor();
-//   _TintState._privateConstructor();
+class Tint extends StatefulWidget {
+  static final _TintState instance = _TintState.instance;
+  @override
+  _TintState createState() => _TintState.instance;
+}
 
-//   bool offStage = true;
-//   double opacity = 0;
+class _TintState extends State<Tint> {
+  static final _TintState instance = _TintState._privateConstructor();
+  _TintState._privateConstructor();
 
-//   turnOn() {
-//     setState(() {
-//       offStage = false;
-//       opacity = 0.5;
-//     });
-//   }
+  bool offStage = true;
+  double opacity = 0;
 
-//   turnOff() {
-//     Timer(Duration(milliseconds: 300), () {
-//       setState(() {
-//         offStage = true;
-//       });
-//     });
-//     setState(() {
-//       opacity = 0.0;
-//     });
-//   }
+  turnOn() {
+    setState(() {
+      offStage = false;
+      opacity = 0.5;
+    });
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Offstage(
-//       offstage: offStage,
-//       child: AnimatedOpacity(
-//         duration: Duration(milliseconds: 300),
-//         opacity: opacity,
-//         child: Container(color: Colors.black),
-//       ),
-//     );
-//   }
-// }
+  turnOff() {
+    Timer(Duration(milliseconds: 300), () {
+      setState(() {
+        offStage = true;
+      });
+    });
+    setState(() {
+      opacity = 0.0;
+    });
+  }
 
-// class ModalWindow extends StatefulWidget {
-//   static final _ModalWindowState instance = _ModalWindowState.instance;
-//   @override
-//   _ModalWindowState createState() => _ModalWindowState.instance;
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Offstage(
+      offstage: offStage,
+      child: AnimatedOpacity(
+        duration: Duration(milliseconds: 300),
+        opacity: opacity,
+        child: Container(color: Colors.black),
+      ),
+    );
+  }
+}
 
-// class _ModalWindowState extends State<ModalWindow> {
-//   static final _ModalWindowState instance =
-//       _ModalWindowState._privateConstructor();
-//   _ModalWindowState._privateConstructor();
+class ModalWindow extends StatefulWidget {
+  static final _ModalWindowState instance = _ModalWindowState.instance;
+  @override
+  _ModalWindowState createState() => _ModalWindowState.instance;
+}
 
-//   bool isActive = false;
-//   double yOffset = 0;
-//   Duration duration = Duration(milliseconds: 300);
+class _ModalWindowState extends State<ModalWindow> {
+  static final _ModalWindowState instance =
+      _ModalWindowState._privateConstructor();
+  _ModalWindowState._privateConstructor();
 
-//   turnOn() {
-//     setState(() {
-//       isActive = true;
-//       duration = Duration(milliseconds: 300);
-//     });
-//   }
+  Widget _content = Container();
+  bool isActive = false;
+  double yOffset = 0;
+  Duration duration = Duration(milliseconds: 300);
 
-//   turnOff() {
-//     setState(() {
-//       isActive = false;
-//       yOffset = 0;
-//       duration = Duration(milliseconds: 300);
-//     });
-//   }
+  updateContent(Widget content) {
+    setState(() {
+      _content = content;
+    });
+  }
 
-//   turnOffQuickly() {
-//     setState(() {
-//       isActive = false;
-//       yOffset = 0;
-//       duration = Duration(milliseconds: 200);
-//     });
-//   }
+  turnOn() {
+    setState(() {
+      isActive = true;
+      duration = Duration(milliseconds: 300);
+    });
+  }
 
-//   setInstantMode() {
-//     setState(() {
-//       duration = Duration(milliseconds: 0);
-//     });
-//   }
+  turnOff() {
+    setState(() {
+      isActive = false;
+      yOffset = 0;
+      duration = Duration(milliseconds: 300);
+    });
+  }
 
-//   resetQuicklyToTop() {
-//     setState(() {
-//       yOffset = 0;
-//       duration = Duration(milliseconds: 50);
-//     });
-//   }
+  turnOffQuickly() {
+    setState(() {
+      isActive = false;
+      yOffset = 0;
+      duration = Duration(milliseconds: 200);
+    });
+  }
 
-//   shouldTurnOff() {
-//     if (yOffset > 50) {
-//       DocumentModal.instance.turnOff();
-//     } else {
-//       resetQuicklyToTop();
-//     }
-//   }
+  setInstantMode() {
+    setState(() {
+      duration = Duration(milliseconds: 0);
+    });
+  }
 
-//   move(double dy) {
-//     if (dy > 10) {
-//       DocumentModal.instance.turnOffQuickly();
-//       return;
-//     }
-//     setState(() {
-//       yOffset = yOffset + dy < 0 ? 0 : yOffset + dy;
-//     });
-//   }
+  resetQuicklyToTop() {
+    setState(() {
+      yOffset = 0;
+      duration = Duration(milliseconds: 50);
+    });
+  }
 
-//   _getWindowPosition(BuildContext context) {
-//     if (!isActive) {
-//       return MediaQuery.of(context).size.height;
-//     } else {
-//       return MediaQuery.of(context).padding.top + yOffset;
-//     }
-//   }
+  shouldTurnOff() {
+    if (yOffset > 50) {
+      DocumentModal.instance.turnOff();
+    } else {
+      resetQuicklyToTop();
+    }
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return AnimatedPositioned(
-//       top: _getWindowPosition(context),
-//       width: MediaQuery.of(context).size.width,
-//       height: MediaQuery.of(context).size.height -
-//           MediaQuery.of(context).padding.top,
-//       duration: duration,
-//       curve: Curves.easeInOut,
-//       child: ClipRRect(
-//         borderRadius: BorderRadius.only(
-//           topLeft: Radius.circular(30),
-//           topRight: Radius.circular(30),
-//         ),
-//         child: Stack(
-//           children: <Widget>[
-//             DocumentRenderer.instance.document,
-//             PullBar(),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+  move(double dy) {
+    if (dy > 10) {
+      DocumentModal.instance.turnOffQuickly();
+      return;
+    }
+    setState(() {
+      yOffset = yOffset + dy < 0 ? 0 : yOffset + dy;
+    });
+  }
 
-// class PullBar extends StatefulWidget {
-//   @override
-//   _PullBarState createState() => _PullBarState();
-// }
+  _getWindowPosition(BuildContext context) {
+    if (!isActive) {
+      return MediaQuery.of(context).size.height;
+    } else {
+      return MediaQuery.of(context).padding.top + yOffset;
+    }
+  }
 
-// class _PullBarState extends State<PullBar> {
-//   double topStakedDragPositionY;
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedPositioned(
+      top: _getWindowPosition(context),
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height -
+          MediaQuery.of(context).padding.top,
+      duration: duration,
+      curve: Curves.easeInOut,
+      child: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+        child: Stack(
+          children: <Widget>[
+            Container(color: Colors.white),
+            _content,
+            PullBar(),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onVerticalDragStart: (DragStartDetails value) {
-//         topStakedDragPositionY = value.globalPosition.dy;
-//         ModalWindow.instance.setInstantMode();
-//       },
-//       onVerticalDragUpdate: (DragUpdateDetails value) {
-//         // if (value.globalPosition.dy < MediaQuery.of(context).padding.top) {
-//         //   ModalWindow.instance.resetQuicklyToTop();
-//         //   return;
-//         // }
-//         if (value.globalPosition.dy < topStakedDragPositionY) {
-//           ModalWindow.instance.resetQuicklyToTop();
-//           return;
-//         }
-//         ModalWindow.instance.move(value.delta.dy);
-//       },
-//       onVerticalDragEnd: (f) {
-//         ModalWindow.instance.shouldTurnOff();
-//       },
-//       child: Container(
-//         height: 35,
-//         decoration: BoxDecoration(
-//           color: Colors.transparent,
-//         ),
-//         child: Center(
-//           child: Container(
-//             constraints: BoxConstraints(maxHeight: 5, maxWidth: 60),
-//             decoration: BoxDecoration(
-//               color: Colors.grey.shade400,
-//               borderRadius: BorderRadius.circular(6),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+class PullBar extends StatefulWidget {
+  @override
+  _PullBarState createState() => _PullBarState();
+}
+
+class _PullBarState extends State<PullBar> {
+  double topStakedDragPositionY;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onVerticalDragStart: (DragStartDetails value) {
+        topStakedDragPositionY = value.globalPosition.dy;
+        ModalWindow.instance.setInstantMode();
+      },
+      onVerticalDragUpdate: (DragUpdateDetails value) {
+        // if (value.globalPosition.dy < MediaQuery.of(context).padding.top) {
+        //   ModalWindow.instance.resetQuicklyToTop();
+        //   return;
+        // }
+        if (value.globalPosition.dy < topStakedDragPositionY) {
+          ModalWindow.instance.resetQuicklyToTop();
+          return;
+        }
+        ModalWindow.instance.move(value.delta.dy);
+      },
+      onVerticalDragEnd: (f) {
+        ModalWindow.instance.shouldTurnOff();
+      },
+      child: Container(
+        height: 35,
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+        ),
+        child: Center(
+          child: Container(
+            constraints: BoxConstraints(maxHeight: 5, maxWidth: 60),
+            decoration: BoxDecoration(
+              color: Colors.grey.shade400,
+              borderRadius: BorderRadius.circular(6),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

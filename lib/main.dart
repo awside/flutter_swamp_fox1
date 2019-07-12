@@ -4,6 +4,7 @@ import 'package:swamp_fox/app.dart';
 import 'package:swamp_fox/helper/helper.dart' as MyHelper;
 
 void main() async {
+  // MyHelper.turnOnHitBoxDebugging();
   MyHelper.statusBarDark();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(new Start());
