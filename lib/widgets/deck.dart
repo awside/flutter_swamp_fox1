@@ -108,25 +108,26 @@ class _ButtonBarState extends State<ButtonBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 40,
       color: backgroundColor,
       child: Row(
         children: <Widget>[
           ButtonBarButton(
             index: 0,
             selectedIndex: selectedIndex,
-            iconData: Icons.home,
+            iconData: Typicons.home,
             callback: () => setSelectedIndex(0),
           ),
           ButtonBarButton(
             index: 1,
             selectedIndex: selectedIndex,
-            iconData: Icons.home,
+            iconData: Typicons.book,
             callback: () => setSelectedIndex(1),
           ),
           ButtonBarButton(
             index: 2,
             selectedIndex: selectedIndex,
-            iconData: Icons.home,
+            iconData: Icons.people,
             callback: () => setSelectedIndex(2),
           ),
         ],
@@ -160,7 +161,7 @@ class ButtonBarButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: GestureDetector(
-        onTap: handleButton(),
+        onTap: handleButton,
         child: Container(
           color: Colors.transparent,
           child: Center(
