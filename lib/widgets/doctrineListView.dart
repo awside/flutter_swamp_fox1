@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swamp_fox/loaders/yamlLoader.dart';
 import 'package:swamp_fox/widgets/DocumentModal.dart';
-import 'package:swamp_fox/widgets/topBar.dart';
+import 'package:swamp_fox/widgets/deck.dart';
 
 class DoctrineListView extends StatefulWidget {
   @override
@@ -27,7 +27,7 @@ class _DoctrineListViewState extends State<DoctrineListView> {
     return ListView.builder(
       itemCount: doctrineList.length + 1,
       itemBuilder: (BuildContext context, int index) {
-        if (index == 0) return Container(height: TopBar.height);
+        if (index == 0) return Container(height: TopBar.instance.height);
         return doctrineList[index - 1];
       },
     );

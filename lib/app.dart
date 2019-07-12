@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:swamp_fox/loaders/yamlLoader.dart';
 import 'package:swamp_fox/widgets/DocumentModal.dart';
 import 'package:swamp_fox/widgets/bottomBar.dart' as MyBottomBar;
+import 'package:swamp_fox/widgets/deck.dart';
 import 'package:swamp_fox/widgets/doctrineListView.dart';
-import 'package:swamp_fox/widgets/statusBar.dart';
-import 'package:swamp_fox/widgets/topBar.dart';
 
 class App extends StatelessWidget {
   @override
@@ -18,8 +17,8 @@ class App extends StatelessWidget {
         ),
         DoctrineListView(),
         MyBottomBar.BottomBar(),
-        TopBar(),
-        StatusBar(),
+        TopBar.instance,
+        StatusBar.instance,
         DocumentModal.instance,
       ],
     );
