@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:swamp_fox/loaders/yamlLoader.dart';
-import 'package:swamp_fox/widgets/DocumentModal.dart';
+import 'package:swamp_fox/loaders/yaml_loader.dart';
+import 'package:swamp_fox/widgets/document_modal.dart';
 import 'package:swamp_fox/widgets/deck.dart';
-import 'package:swamp_fox/widgets/doctrineListView.dart';
+import 'package:swamp_fox/widgets/doctrine_list_view.dart';
 
 class App extends StatelessWidget {
   @override

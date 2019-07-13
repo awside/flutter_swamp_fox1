@@ -1,4 +1,4 @@
-import 'package:swamp_fox/io/firebase.dart';
+import 'package:swamp_fox/firebase/fb_storage.dart';
 import 'package:yaml/yaml.dart';
 
 class YAMLLoader {
@@ -9,9 +9,9 @@ class YAMLLoader {
     var file = await FBStorage.instance.getStringFromFile(fileName);
     var yamlDocList = loadYamlDocuments(file);
     var docList = <dynamic>[];
-    yamlDocList.forEach((yamlDoc) {
+    for (var yamlDoc in yamlDocList) {
       docList.add(yamlDoc.contents.value);
-    });
+    }
     return docList;
   }
 }

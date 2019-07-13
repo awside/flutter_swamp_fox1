@@ -1,11 +1,11 @@
 List<EmitterListener> _emitterListeners = [];
 
 emit(String emitterName, Map<String, dynamic> args) {
-  _emitterListeners.forEach((emitterListener) {
+  for (var emitterListener in _emitterListeners) {
     if (emitterName == emitterListener.name) {
       emitterListener.callback(args);
     }
-  });
+  }
 }
 
 EmitterListener addListener(

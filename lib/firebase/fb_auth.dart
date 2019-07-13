@@ -1,8 +1,5 @@
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:http/http.dart' as http;
 
 class FBAuth {
   static final FBAuth instance = FBAuth._privateConstructor();
@@ -68,40 +65,5 @@ class FBAuth {
 
   Future signOut() async {
     await FirebaseAuth.instance.signOut();
-  }
-}
-
-class FBFirestore {
-  static final FBFirestore instance = FBFirestore._privateConstructor();
-  FBFirestore._privateConstructor();
-
-  Future<dynamic> getField(
-      String collection, String document, String field) async {
-    var value = await Firestore.instance
-        .collection(collection)
-        .document(document)
-        .get();
-    return value[field];
-  }
-}
-
-class FBStorage {
-  static final FBStorage instance = FBStorage._privateConstructor();
-  FBStorage._privateConstructor();
-
-  Future<String> getStringFromFile(String fileName) async {
-    var url =
-        await FirebaseStorage.instance.ref().child(fileName).getDownloadURL();
-    var response = await http.get(url);
-    return response.body;
-  }
-
-  Future<StorageMetadata> getMetadataFromFile(String fileName) async {
-    return await FirebaseStorage.instance.ref().child(fileName).getMetadata();
-  }
-
-  Future<int> getTimeUpdated(String fileName) async {
-    var metaData = await getMetadataFromFile(fileName);
-    return metaData.updatedTimeMillis;
   }
 }

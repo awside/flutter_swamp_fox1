@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:swamp_fox/loaders/yamlLoader.dart';
-import 'package:swamp_fox/widgets/DocumentModal.dart';
+import 'package:swamp_fox/loaders/yaml_loader.dart';
+import 'package:swamp_fox/widgets/document_modal.dart';
 import 'package:swamp_fox/widgets/deck.dart';
 
 class DoctrineListView extends StatefulWidget {
@@ -36,12 +36,12 @@ class _DoctrineListViewState extends State<DoctrineListView> {
   Future<List<Widget>> buildDoctrineWidgetList() async {
     List<Widget> list = [];
     var doctrine = await YAMLLoader.instance.loadDocuments(doctrineFileName);
-    doctrine.forEach((doc) {
+    for (var doc in doctrine) {
       list.add(buildHeader(doc['document']));
-      doc['topics'].forEach((topic) {
+      for (var topic in doc['topics']) {
         list.add(buildTopic(topic));
-      });
-    });
+      }
+    }
     return list;
   }
 
@@ -82,12 +82,12 @@ class DoctrineReader extends StatelessWidget {
   final List<Widget> doctrineList = [];
 
   DoctrineReader(dynamic sections) {
-    sections.forEach((section) {
+    for (var section in sections) {
       doctrineList.add(buildTitle(section['title']));
-      section['paragraphs'].forEach((paragraph) {
+      for (var paragraph in section['paragraphs']) {
         doctrineList.add(buildTitle(paragraph));
-      });
-    });
+      }
+    }
   }
 
   @override

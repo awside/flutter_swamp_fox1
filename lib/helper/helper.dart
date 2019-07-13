@@ -25,7 +25,3 @@ double getScrollPosition(ScrollController controller) {
 Map<String, dynamic> getJsonFromString(String data) {
   return json.decode(data);
 }
-
-turnOnHitBoxDebugging() {
-  debugPaintPointersEnabled = true;
-}
