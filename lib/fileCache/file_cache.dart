@@ -10,14 +10,9 @@ class FileCache {
   StreamController _streamController = StreamController();
   Stream get stream => _streamController.stream;
   StreamSink get _sink => _streamController.sink;
-  int l = 0;
 
   FileCache(this.fileName) {
     _load();
-  }
-
-  sendAgain() {
-    _sink.add((l += 1).toString());
   }
 
   close() {

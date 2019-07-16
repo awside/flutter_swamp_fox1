@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:swamp_fox/fileCache/file_cache.dart';
 import 'package:swamp_fox/firebase/fb_firestore.dart';
@@ -43,9 +45,13 @@ class _Test1State extends State<Test1> {
   _Test1State() {
     fileCache.stream.listen((data) {
       _bloc.sink.add(data as String);
-      // fileCache.close();
-      // fileCache.sendAgain();
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    fileCache.close();
   }
 
   @override
