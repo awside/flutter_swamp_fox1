@@ -30,6 +30,7 @@ dependencies:
   uuid: ^2.0.2
   typicons_flutter: ^0.2.1
   yaml: ^2.1.16
+  rxdart: ^0.22.0
 
 dev_dependencies:
   flutter_test:

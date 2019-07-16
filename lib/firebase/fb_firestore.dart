@@ -4,7 +4,7 @@ class FBFirestore {
   static final FBFirestore instance = FBFirestore._privateConstructor();
   FBFirestore._privateConstructor();
 
-  Future<dynamic> getField(
+  Future<dynamic> getData(
       String collection, String document, String field) async {
     var value = await Firestore.instance
         .collection(collection)
@@ -12,4 +12,10 @@ class FBFirestore {
         .get();
     return value[field];
   }
+
+  Future<Null> setData(
+      String collection, String document, Map<String, dynamic> data) async {
+        await Firestore.instance.collection(collection)
+        .document(document).setData(data, merge: true);
+      }
 }
