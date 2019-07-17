@@ -6,10 +6,10 @@ import 'package:swamp_fox/localStorage/local_storage.dart';
 import 'package:swamp_fox/user/user_info.dart';
 
 class FileCache {
-  final String fileName;
   StreamController _streamController = StreamController();
   Stream get stream => _streamController.stream;
   StreamSink get _sink => _streamController.sink;
+  final String fileName;
 
   FileCache(this.fileName) {
     _load();

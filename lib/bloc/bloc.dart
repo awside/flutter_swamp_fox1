@@ -1,7 +1,7 @@
 import 'dart:async';
 
 class Bloc {
-  final _stateController = StreamController.broadcast();
+  final _stateController = StreamController();
   StreamSink get _stateSink => _stateController.sink;
   Stream get stream => _stateController.stream;
 
