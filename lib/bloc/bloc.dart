@@ -9,7 +9,5 @@ class Bloc<T> {
 
   sink() => _sink.add(eventStateObj);
 
-  close() {
-    _streamController.close();
-  }
+  close() => _streamController.close();
 }

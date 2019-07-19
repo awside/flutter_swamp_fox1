@@ -6,10 +6,33 @@ import 'package:typicons_flutter/typicons.dart';
 
 class NavBarData {
   Color backgroundColor = Color.fromRGBO(216, 225, 211, 1);
+  List<Widget> buttons = [];
 }
 
 class NavBarBloc extends Bloc<NavBarData> {
   var eventStateObj = NavBarData();
+  List<IconData> icons = [Typicons.home, Typicons.book, Icons.people];
+
+  NavBarBloc() {
+    buildButtons();
+  }
+
+  buildButtons({int selectedIndex = 0}) {
+    eventStateObj.buttons.clear();
+    for (var i = 0; i < icons.length; i++) {
+      eventStateObj.buttons.add(NavBarButton(
+        index: i,
+        selected: i == selectedIndex,
+        iconData: icons[i],
+        callback: handleButton,
+      ));
+    }
+  }
+
+  handleButton(int index) {
+    buildButtons(selectedIndex: index);
+    sink();
+  }
 }
 
 class NavBar extends StatelessWidget {
@@ -31,14 +54,7 @@ class NavBar extends StatelessWidget {
                     Container(
                       height: 40,
                       child: Row(
-                        children: <Widget>[
-                          ButtonBarButton(
-                            index: 0,
-                            selectedIndex: 1,
-                            iconData: Typicons.home,
-                            callback: () => null,
-                          )
-                        ],
+                        children: snapshot.data.buttons,
                       ),
                     ),
                     Container(height: ScreenSize.instance.paddingBottom)
@@ -51,29 +67,24 @@ class NavBar extends StatelessWidget {
   }
 }
 
-// iconData: Typicons.home
-// iconData: Typicons.book
-// iconData: Icons.people
-
-class ButtonBarButton extends StatelessWidget {
+class NavBarButton extends StatelessWidget {
   final Color iconColor = const Color.fromRGBO(58, 74, 81, 1);
   final Color iconColorSelected = const Color.fromRGBO(255, 111, 61, 1);
   final int index;
-  final int selectedIndex;
+  final bool selected;
   final IconData iconData;
-  final Function callback;
+  final Function(int) callback;
 
-  const ButtonBarButton({
-    Key key,
+  NavBarButton({
     @required this.index,
-    @required this.selectedIndex,
+    @required this.selected,
     this.iconData,
     this.callback,
-  }) : super(key: key);
+  });
 
   handleButton() {
     HapticFeedback.lightImpact();
-    callback?.call();
+    callback?.call(index);
   }
 
   @override
@@ -87,7 +98,7 @@ class ButtonBarButton extends StatelessWidget {
             child: Icon(
               iconData ?? Typicons.beer,
               size: 32,
-              color: index == selectedIndex ? iconColorSelected : iconColor,
+              color: selected ? iconColorSelected : iconColor,
             ),
           ),
         ),
