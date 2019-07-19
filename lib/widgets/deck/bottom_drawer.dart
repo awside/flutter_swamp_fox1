@@ -125,27 +125,27 @@
 
 //   @override
 //   Widget build(BuildContext context) {
-//     return AnimatedPositioned(
-//       top: _getWindowPosition(context),
-//       width: MediaQuery.of(context).size.width,
-//       height: MediaQuery.of(context).size.height -
-//           MediaQuery.of(context).padding.top,
-//       duration: duration,
-//       curve: Curves.easeInOut,
-//       child: ClipRRect(
-//         borderRadius: BorderRadius.only(
-//           topLeft: Radius.circular(30),
-//           topRight: Radius.circular(30),
-//         ),
-//         child: Stack(
-//           children: <Widget>[
-//             Container(color: Colors.white),
-//             _content,
-//             PullBar(),
-//           ],
-//         ),
-//       ),
-//     );
+    // return AnimatedPositioned(
+    //   top: _getWindowPosition(context),
+    //   width: MediaQuery.of(context).size.width,
+    //   height: MediaQuery.of(context).size.height -
+    //       MediaQuery.of(context).padding.top,
+    //   duration: duration,
+    //   curve: Curves.easeInOut,
+    //   child: ClipRRect(
+    //     borderRadius: BorderRadius.only(
+    //       topLeft: Radius.circular(30),
+    //       topRight: Radius.circular(30),
+    //     ),
+    //     child: Stack(
+    //       children: <Widget>[
+    //         Container(color: Colors.white),
+    //         _content,
+    //         PullBar(),
+    //       ],
+    //     ),
+    //   ),
+    // );
 //   }
 // }
 

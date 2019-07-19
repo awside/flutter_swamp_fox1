@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:swamp_fox/app.dart';
-import 'package:swamp_fox/helper/helper.dart' as MyHelper;
+import 'package:swamp_fox/helper/helper.dart';
 
 void main() async {
   // debugPaintPointersEnabled = true;
-  MyHelper.statusBarDark();
+  statusBarDark();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(new Start());
 }

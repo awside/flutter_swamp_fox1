@@ -5,6 +5,23 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 import 'package:yaml/yaml.dart';
 
+class ScreenSize {
+  static final ScreenSize instance = ScreenSize._privateConstructor();
+  ScreenSize._privateConstructor();
+
+  double paddingTop;
+  double paddingBottom;
+  double screenWidth;
+  double screenHeight;
+
+  setSizes(BuildContext context) {
+    paddingTop = MediaQuery.of(context).padding.top;
+    paddingBottom = MediaQuery.of(context).padding.bottom;
+    screenWidth = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery.of(context).size.height;
+  }
+}
+
 statusBarLight() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light
       .copyWith(statusBarIconBrightness: Brightness.light));

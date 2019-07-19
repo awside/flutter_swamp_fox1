@@ -1,13 +1,13 @@
 import 'dart:async';
 
-class Bloc<State, Event> {
-  final _stateController = StreamController<State>.broadcast();
-  StreamSink<State> get _stateSink => _stateController.sink;
-  Stream<State> get stream => _stateController.stream;
+class Bloc<EventState> {
+  final _eventController = StreamController<EventState>();
+  StreamSink<EventState> get sink => _eventController.sink;
+  Stream<EventState> get _eventStream => _eventController.stream;
 
-  final _eventController = StreamController<Event>();
-  StreamSink<Event> get sink => _eventController.sink;
-  Stream<Event> get _eventStream => _eventController.stream;
+  final _stateController = StreamController<EventState>();
+  StreamSink<EventState> get _stateSink => _stateController.sink;
+  Stream<EventState> get stream => _stateController.stream;
 
   Bloc() {
     _eventStream.listen((event) {
@@ -15,7 +15,7 @@ class Bloc<State, Event> {
     });
   }
 
-  State processEvent(Event event) => null;
+  EventState processEvent(EventState event) => event;
 
   dispose() {
     _stateController.close();

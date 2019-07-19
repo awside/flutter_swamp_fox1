@@ -1,36 +1,49 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:swamp_fox/bloc/bloc.dart';
 
-class TintData {
-  var offStage = true;
-  var duration = Duration(milliseconds: 300);
-  var opacity = 0.0;
+class TintEventState {
+  bool offStage = true;
+  Duration duration = Duration(milliseconds: 0);
+  double opacity = 0;
 }
 
-enum TintEvent { open, close, closeQuickly }
+class TintOn extends TintEventState {
+  var offStage = false;
+  var duration = Duration(milliseconds: 300);
+  var opacity = 0.5;
+}
 
-class TintBloc extends Bloc<TintData, TintEvent> {
-  var data = TintData();
+class TintOff extends TintEventState {
+  var offStage = false;
+  var duration = Duration(milliseconds: 300);
+  var opacity = 0;
+}
 
-  processEvent(event) {
-    switch (event) {
-      case TintEvent.open:
-        data.offStage = false;
-        data.duration = Duration(milliseconds: 300);
-        data.opacity = 0.5;
-        break;
-      case TintEvent.close:
-        data.offStage = true;
-        data.duration = Duration(milliseconds: 300);
-        data.opacity = 0.0;
-        break;
-      case TintEvent.closeQuickly:
-        data.offStage = true;
-        data.duration = Duration(milliseconds: 200);
-        data.opacity = 0.0;
+class TintOffQuickly extends TintEventState {
+  var offStage = false;
+  var duration = Duration(milliseconds: 300);
+  var opacity = 0;
+}
+
+class TintStageOff extends TintEventState {
+  var offStage = true;
+  var duration = Duration(milliseconds: 200);
+  var opacity = 0;
+}
+
+class TintBloc extends Bloc<TintEventState> {
+  @override
+  TintEventState processEvent(TintEventState event) {
+    switch (event.runtimeType) {
+      case TintOffQuickly:
+        Timer(Duration(milliseconds: 200), () {
+          sink.add(TintStageOff());
+        });
         break;
     }
-    return data;
+    return event;
   }
 }
 
@@ -38,17 +51,17 @@ class Tint extends StatelessWidget {
   static final Tint instance = Tint._privateConstructor();
   Tint._privateConstructor();
 
-  final _tintBloc = TintBloc();
+  final _bloc = TintBloc();
 
-  event(TintEvent event) {
-    _tintBloc.sink.add(event);
+  event(TintEventState event) {
+    _bloc.sink.add(event);
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<TintData>(
-        stream: _tintBloc.stream,
-        initialData: _tintBloc.data,
+    return StreamBuilder<TintEventState>(
+        stream: _bloc.stream,
+        initialData: TintEventState(),
         builder: (context, snapshot) {
           return Offstage(
             offstage: snapshot.data.offStage,
