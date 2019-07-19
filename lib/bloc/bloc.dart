@@ -1,24 +1,15 @@
 import 'dart:async';
 
-class Bloc<EventState> {
-  final _eventController = StreamController<EventState>();
-  StreamSink<EventState> get sink => _eventController.sink;
-  Stream<EventState> get _eventStream => _eventController.stream;
+class Bloc<T> {
+  T eventStateObj;
 
-  final _stateController = StreamController<EventState>();
-  StreamSink<EventState> get _stateSink => _stateController.sink;
-  Stream<EventState> get stream => _stateController.stream;
+  final _streamController = StreamController<T>();
+  StreamSink<T> get _sink => _streamController.sink;
+  Stream<T> get stream => _streamController.stream;
 
-  Bloc() {
-    _eventStream.listen((event) {
-      _stateSink.add(processEvent(event));
-    });
-  }
+  sink() => _sink.add(eventStateObj);
 
-  EventState processEvent(EventState event) => event;
-
-  dispose() {
-    _stateController.close();
-    _eventController.close();
+  close() {
+    _streamController.close();
   }
 }

@@ -1,62 +1,82 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
 import 'package:swamp_fox/bloc/bloc.dart';
-import 'package:swamp_fox/helper/helper.dart';
+import 'package:swamp_fox/helper/screen_ruler.dart';
+import 'package:swamp_fox/widgets/deck/deck.dart';
 
-import 'pullbar.dart';
-
-class RollSheetEventState {
+class RollSheetData {
   double location = ScreenSize.instance.screenHeight;
-  Duration duration = Duration(milliseconds: 0);
+  Duration duration = Duration(milliseconds: 300);
   Widget content = Container();
 }
 
-class RollSheetOpen extends RollSheetEventState {
-  var location = ScreenSize.instance.paddingTop;
-  var duration = Duration(milliseconds: 300);
-  var content;
-}
+class RollSheetBloc extends Bloc<RollSheetData> {
+  var eventStateObj = RollSheetData();
+  //
+  var ignoreInput = false;
 
-class RollSheetClose extends RollSheetEventState {
-  var location = ScreenSize.instance.screenHeight;
-  var duration = Duration(milliseconds: 300);
-}
-
-class RollSheetContent extends RollSheetEventState {
-  RollSheetContent(Widget content) {
-    this.content = content;
-    location = null;
-    duration = null;
+  open({int speed = 300}) {
+    ignoreInput = false;
+    eventStateObj.location = ScreenSize.instance.paddingTop;
+    eventStateObj.duration = Duration(milliseconds: speed);
+    Deck.instance.tint.bloc.turnOn(speed: speed);
+    sink();
   }
-}
 
-class RollSheetBloc extends Bloc<RollSheetEventState> {
-  var eventState = RollSheetEventState();
+  close({int speed = 300}) {
+    ignoreInput = true;
+    eventStateObj.location = ScreenSize.instance.screenHeight;
+    eventStateObj.duration = Duration(milliseconds: speed);
+    Deck.instance.tint.bloc.turnOff(speed: speed);
+    sink();
+  }
 
-  @override
-  RollSheetEventState processEvent(RollSheetEventState event) {
-    eventState.location ??= event.location;
-    eventState.duration ??= event.duration;
-    eventState.content ??= event.content;
-    return eventState;
+  move(double y) {
+    if (ignoreInput) return;
+    if (y > 15) {
+      close(speed: 200);
+      return;
+    }
+    eventStateObj.location += y;
+    eventStateObj.duration = Duration(milliseconds: 0);
+    eventStateObj.location =
+        max(eventStateObj.location, ScreenSize.instance.paddingTop);
+    sink();
+  }
+
+  set content(Widget content) {
+    eventStateObj.content = content;
+    sink();
+  }
+
+  // PullBar
+
+  onVerticalDragStart(DragStartDetails value) {}
+
+  onVerticalDragUpdate(DragUpdateDetails value) {
+    move(value.delta.dy);
+  }
+
+  onVerticalDragEnd() {
+    if (eventStateObj.location > ScreenSize.instance.paddingTop + 50) {
+      close();
+    } else {
+      open(speed: 100);
+    }
   }
 }
 
 class RollSheet extends StatelessWidget {
-  static final RollSheet instance = RollSheet._privateConstructor();
-  RollSheet._privateConstructor();
-
-  final _bloc = RollSheetBloc();
-
-  event(RollSheetEventState event) {
-    _bloc.sink.add(event);
-  }
+  final bloc = RollSheetBloc();
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<RollSheetEventState>(
-        stream: _bloc.stream,
-        initialData: RollSheetEventState(),
+    return StreamBuilder<RollSheetData>(
+        stream: bloc.stream,
+        initialData: bloc.eventStateObj,
         builder: (context, snapshot) {
           return AnimatedPositioned(
             top: snapshot.data.location,
@@ -70,14 +90,58 @@ class RollSheet extends StatelessWidget {
                 topLeft: Radius.circular(30),
                 topRight: Radius.circular(30),
               ),
-              child: Column(
-                children: <Widget>[
-                  PullBar(),
-                  snapshot.data.content,
-                ],
+              child: Container(
+                color: Colors.white,
+                child: Column(
+                  children: <Widget>[
+                    PullBar(
+                      onVerticalDragStart: bloc.onVerticalDragStart,
+                      onVerticalDragUpdate: bloc.onVerticalDragUpdate,
+                      onVerticalDragEnd: bloc.onVerticalDragEnd,
+                    ),
+                    snapshot.data.content,
+                  ],
+                ),
               ),
             ),
           );
         });
+  }
+}
+
+class PullBar extends StatelessWidget {
+  final Function(DragStartDetails) onVerticalDragStart;
+  final Function(DragUpdateDetails) onVerticalDragUpdate;
+  final Function onVerticalDragEnd;
+
+  const PullBar(
+      {this.onVerticalDragStart,
+      this.onVerticalDragUpdate,
+      this.onVerticalDragEnd});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onVerticalDragStart: (DragStartDetails value) =>
+          onVerticalDragStart?.call(value),
+      onVerticalDragUpdate: (DragUpdateDetails value) =>
+          onVerticalDragUpdate?.call(value),
+      onVerticalDragEnd: (f) => onVerticalDragEnd?.call(),
+      child: Container(
+        height: 35,
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+        ),
+        child: Center(
+          child: Container(
+            constraints: BoxConstraints(maxHeight: 5, maxWidth: 60),
+            decoration: BoxDecoration(
+              color: Colors.grey.shade400,
+              borderRadius: BorderRadius.circular(6),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
