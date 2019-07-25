@@ -14,10 +14,10 @@ class NavBarBloc extends Bloc<NavBarData> {
   List<IconData> icons = [Typicons.home, Typicons.book, Icons.people];
 
   NavBarBloc() {
-    buildButtons();
+    _buildButtons();
   }
 
-  buildButtons({int selectedIndex = 0}) {
+  _buildButtons({int selectedIndex = 0}) {
     eventStateObj.buttons.clear();
     for (var i = 0; i < icons.length; i++) {
       eventStateObj.buttons.add(NavBarButton(
@@ -30,7 +30,7 @@ class NavBarBloc extends Bloc<NavBarData> {
   }
 
   handleButton(int index) {
-    buildButtons(selectedIndex: index);
+    _buildButtons(selectedIndex: index);
     sink();
   }
 }
