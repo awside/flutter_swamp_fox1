@@ -26,6 +26,7 @@ class Deck extends StatelessWidget {
           alignment: Alignment(0, -0.5),
           child: RaisedButton(
             onPressed: () {
+              print('hhihi');
               rollSheet.bloc.open();
             },
           ),

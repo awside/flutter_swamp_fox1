@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 
 import 'package:swamp_fox/app.dart';
 import 'package:swamp_fox/helper/helper.dart';
@@ -8,8 +7,8 @@ import 'package:swamp_fox/helper/helper.dart';
 void main() async {
   // debugPaintPointersEnabled = true;
   statusBarDark();
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(new Start());
+  // await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  runApp(Start());
 }
 
 class Start extends StatelessWidget {
@@ -17,9 +16,7 @@ class Start extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        textTheme: TextTheme(
-            // title: TextStyle(fontSize: 28),
-            ),
+        textTheme: TextTheme(),
       ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(

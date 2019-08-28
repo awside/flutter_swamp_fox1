@@ -136,7 +136,7 @@ class PullBar extends StatelessWidget {
           child: Container(
             constraints: BoxConstraints(maxHeight: 5, maxWidth: 60),
             decoration: BoxDecoration(
-              color: Colors.grey.shade400,
+              // color: Colors.grey.shade400,
               borderRadius: BorderRadius.circular(6),
             ),
           ),
